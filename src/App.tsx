@@ -1,5 +1,12 @@
+// Components
+import Pixel from "./components/Pixel/Pixel";
+
 function App() {
-  return <div className="App">Faso</div>;
+  return (
+    <div className="App">
+      <Pixel />
+    </div>
+  );
 }
 
 export default App;
