@@ -16,18 +16,21 @@ function App() {
         <button
           className={styles.SelectColor}
           style={{ background: "#FF8E00" }}
+          onClick={() => setSelectedColor("#FF8E00")}
         ></button>
         <button
           className={styles.SelectColor}
           style={{ background: "#003F7D" }}
+          onClick={() => setSelectedColor("#003F7D")}
         ></button>
         <button
           className={styles.SelectColor}
           style={{ background: "#333333" }}
+          onClick={() => setSelectedColor("#333333")}
         ></button>
       </div>
 
-      <Pixel />
+      <Pixel selectedColor={selectedColor} />
     </div>
   );
 }
