@@ -31,6 +31,11 @@ function App() {
       </div>
 
       <Pixel selectedColor={selectedColor} />
+      <Pixel selectedColor={selectedColor} />
+      <Pixel selectedColor={selectedColor} />
+      <Pixel selectedColor={selectedColor} />
+      <Pixel selectedColor={selectedColor} />
+      <Pixel selectedColor={selectedColor} />
     </div>
   );
 }
