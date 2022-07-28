@@ -30,12 +30,23 @@ function App() {
         ></button>
       </div>
 
-      <Pixel selectedColor={selectedColor} />
-      <Pixel selectedColor={selectedColor} />
-      <Pixel selectedColor={selectedColor} />
-      <Pixel selectedColor={selectedColor} />
-      <Pixel selectedColor={selectedColor} />
-      <Pixel selectedColor={selectedColor} />
+      <div>
+        <Pixel selectedColor={selectedColor} />
+        <Pixel selectedColor={selectedColor} />
+        <Pixel selectedColor={selectedColor} />
+        <Pixel selectedColor={selectedColor} />
+        <Pixel selectedColor={selectedColor} />
+        <Pixel selectedColor={selectedColor} />
+        <Pixel selectedColor={selectedColor} />
+        <Pixel selectedColor={selectedColor} />
+        <Pixel selectedColor={selectedColor} />
+        <Pixel selectedColor={selectedColor} />
+        <Pixel selectedColor={selectedColor} />
+        <Pixel selectedColor={selectedColor} />
+        <Pixel selectedColor={selectedColor} />
+        <Pixel selectedColor={selectedColor} />
+        <Pixel selectedColor={selectedColor} />
+      </div>
     </div>
   );
 }

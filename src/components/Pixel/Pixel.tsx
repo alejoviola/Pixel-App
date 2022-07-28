@@ -10,15 +10,33 @@ type PixelTypes = {
 };
 
 const Pixel: React.FC<PixelTypes> = ({ selectedColor }) => {
-  const [color, setColor] = useState<`#${string}`>("#333333");
+  const [color, setColor] = useState<`#${string}`>("#FFFFFF");
+  const [oldColor, setOldColor] = useState<`#${string}`>("#FFFFFF");
+  const [canChange, setCanChange] = useState<boolean>(true);
 
+  const applyColor = () => {
+    selectedColor ? setColor(selectedColor) : "";
+    setCanChange(false);
+  };
+
+  const changeColorOnHover = () => {
+    setOldColor(color);
+    selectedColor ? setColor(selectedColor) : "";
+  };
+
+  const resetColor = () => {
+    if (canChange) {
+      selectedColor ? setColor(oldColor) : "";
+    }
+    setCanChange(true);
+  };
   return (
     <div
       className={styles.Pixel}
       style={{ background: color }}
-      onMouseEnter={() => {
-        selectedColor ? setColor(selectedColor) : "";
-      }}
+      onClick={applyColor}
+      onMouseEnter={changeColorOnHover}
+      onMouseLeave={resetColor}
     ></div>
   );
 };
