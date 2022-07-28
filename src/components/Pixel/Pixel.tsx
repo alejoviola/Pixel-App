@@ -2,31 +2,32 @@
 import React, { useState } from "react";
 
 // STYLES
-import styles from "./Pixel.module.css";
+import styles from "./Pixel.module.sass";
 
 type PixelTypes = {
-  selectedColor?: `#${string}`;
+  selectedColor: `#${string}`;
   style?: React.CSSProperties;
 };
 
+// COMPONENT
 const Pixel: React.FC<PixelTypes> = ({ selectedColor }) => {
   const [color, setColor] = useState<`#${string}`>("#FFFFFF");
   const [oldColor, setOldColor] = useState<`#${string}`>("#FFFFFF");
   const [canChange, setCanChange] = useState<boolean>(true);
 
   const applyColor = () => {
-    selectedColor ? setColor(selectedColor) : "";
+    setColor(selectedColor);
     setCanChange(false);
   };
 
   const changeColorOnHover = () => {
     setOldColor(color);
-    selectedColor ? setColor(selectedColor) : "";
+    setColor(selectedColor);
   };
 
   const resetColor = () => {
     if (canChange) {
-      selectedColor ? setColor(oldColor) : "";
+      setColor(oldColor);
     }
     setCanChange(true);
   };
