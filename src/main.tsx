@@ -4,6 +4,7 @@ import App from "./App";
 
 // STYLES
 import "./index.sass";
+import "./_var.sass";
 
 ReactDOM.createRoot(document.getElementById("root") as HTMLElement).render(
   <React.StrictMode>

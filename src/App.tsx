@@ -1,54 +1,49 @@
 // REACT
-import { useState } from "react";
+import React, { useState } from "react";
 
 // STYLES
 import styles from "./App.module.sass";
 
 // Components
-import Pixel from "./components/Pixel/Pixel";
+import DrawingPanel from "./components/DrawingPanel/DrawingPanel";
+import CreateFile from "./components/CreateFile/CreateFile";
 
-function App() {
+enum Views {
+  Create,
+  Draw,
+}
+
+// Types
+type SizeType = {
+  width: number;
+  height: number;
+};
+
+// Component
+const App: React.FC = () => {
+  //Views
+  const [view, setView] = useState<Views>(Views.Create);
   const [selectedColor, setSelectedColor] = useState<`#${string}`>("#333333");
 
+  const [size, setSize] = useState<SizeType>({
+    width: 32,
+    height: 32,
+  });
+
+  const create = () => {
+    setView(Views.Draw);
+  };
+
+  ////////////
+  // RENDER //
+  ////////////
   return (
     <div className="App">
-      <div>
-        <button
-          className={styles.SelectColor}
-          style={{ background: "#FF8E00" }}
-          onClick={() => setSelectedColor("#FF8E00")}
-        ></button>
-        <button
-          className={styles.SelectColor}
-          style={{ background: "#003F7D" }}
-          onClick={() => setSelectedColor("#003F7D")}
-        ></button>
-        <button
-          className={styles.SelectColor}
-          style={{ background: "#333333" }}
-          onClick={() => setSelectedColor("#333333")}
-        ></button>
-      </div>
-
-      <div>
-        <Pixel selectedColor={selectedColor} />
-        <Pixel selectedColor={selectedColor} />
-        <Pixel selectedColor={selectedColor} />
-        <Pixel selectedColor={selectedColor} />
-        <Pixel selectedColor={selectedColor} />
-        <Pixel selectedColor={selectedColor} />
-        <Pixel selectedColor={selectedColor} />
-        <Pixel selectedColor={selectedColor} />
-        <Pixel selectedColor={selectedColor} />
-        <Pixel selectedColor={selectedColor} />
-        <Pixel selectedColor={selectedColor} />
-        <Pixel selectedColor={selectedColor} />
-        <Pixel selectedColor={selectedColor} />
-        <Pixel selectedColor={selectedColor} />
-        <Pixel selectedColor={selectedColor} />
-      </div>
+      {view == Views.Create ? (
+        <CreateFile size={size} setSize={setSize} onButtonClick={create} />
+      ) : null}
     </div>
   );
-}
+};
 
 export default App;
