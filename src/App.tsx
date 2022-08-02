@@ -5,8 +5,8 @@ import React, { useState } from "react";
 import styles from "./App.module.sass";
 
 // Components
-import DrawingPanel from "./components/DrawingPanel/DrawingPanel";
 import CreateFile from "./components/CreateFile/CreateFile";
+import Draw from "./components/Draw/Draw";
 
 enum Views {
   Create,
@@ -42,6 +42,7 @@ const App: React.FC = () => {
       {view == Views.Create ? (
         <CreateFile size={size} setSize={setSize} onButtonClick={create} />
       ) : null}
+      {view == Views.Draw ? <Draw size={size} /> : null}
     </div>
   );
 };
