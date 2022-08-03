@@ -10,7 +10,7 @@ import DrawingPanel from "../DrawingPanel/DrawingPanel";
 // types
 type DrawTypes = {
   size: { width: number; height: number };
-  selectedColor: `#${string}`;
+  selectedColor: string;
   style?: React.CSSProperties;
 };
 

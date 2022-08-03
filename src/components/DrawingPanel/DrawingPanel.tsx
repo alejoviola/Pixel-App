@@ -10,7 +10,7 @@ import PixelRow from "../PixelRow/PixelRow";
 type DrawingPanelTypes = {
   width: number;
   height: number;
-  selectedColor: `#${string}`;
+  selectedColor: string;
   style?: React.CSSProperties;
 };
 

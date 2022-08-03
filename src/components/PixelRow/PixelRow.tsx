@@ -10,7 +10,7 @@ import Pixel from "../Pixel/Pixel";
 // Types
 type PixelRowTypes = {
   width: number;
-  selectedColor: `#${string}`;
+  selectedColor: string;
   style?: React.CSSProperties;
 };
 

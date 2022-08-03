@@ -4,13 +4,13 @@ import React, { useState } from "react";
 // STYLES
 import styles from "./Pixel.module.sass";
 
-type PixelTypes = {
-  selectedColor: `#${string}`;
-  style?: React.CSSProperties;
-};
-
 // COMPONENT
-const Pixel: React.FC<PixelTypes> = ({ selectedColor }) => {
+const Pixel = ({
+  selectedColor,
+}: {
+  selectedColor: string;
+  style?: React.CSSProperties;
+}): JSX.Element => {
   const [color, setColor] = useState<`#${string}`>("#FFFFFF");
   const [oldColor, setOldColor] = useState<`#${string}`>("#FFFFFF");
   const [canChange, setCanChange] = useState<boolean>(true);
@@ -38,7 +38,7 @@ const Pixel: React.FC<PixelTypes> = ({ selectedColor }) => {
       onClick={applyColor}
       onMouseEnter={changeColorOnHover}
       onMouseLeave={resetColor}
-    ></div>
+    />
   );
 };
 

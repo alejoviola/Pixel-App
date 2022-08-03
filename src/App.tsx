@@ -8,6 +8,11 @@ import styles from "./App.module.sass";
 import CreateFile from "./components/CreateFile/CreateFile";
 import Draw from "./components/Draw/Draw";
 
+import ColorPicker from "./components/ColorPicker/ColorPicker";
+
+// DATA
+import { colors } from "./data/data.json";
+
 enum Views {
   Create,
   Draw,
@@ -23,11 +28,11 @@ type SizeType = {
 const App: React.FC = () => {
   //Views
   const [view, setView] = useState<Views>(Views.Create);
-  const [selectedColor, setSelectedColor] = useState<`#${string}`>("#333333");
+  const [selectedColor, setSelectedColor] = useState<string>("#FFFFFF");
 
   const [size, setSize] = useState<SizeType>({
-    width: 32,
-    height: 32,
+    width: 16,
+    height: 16,
   });
 
   const create = () => {
@@ -39,10 +44,18 @@ const App: React.FC = () => {
   ////////////
   return (
     <div className="App">
+      <ColorPicker
+        colors={colors}
+        setSelectedColor={setSelectedColor}
+        selectedColor={selectedColor}
+      />
+
       {view == Views.Create ? (
         <CreateFile size={size} setSize={setSize} onButtonClick={create} />
       ) : null}
-      {view == Views.Draw ? <Draw size={size} /> : null}
+      {view == Views.Draw ? (
+        <Draw size={size} selectedColor={selectedColor} />
+      ) : null}
     </div>
   );
 };
