@@ -44,17 +44,18 @@ const App: React.FC = () => {
   ////////////
   return (
     <div className="App">
-      <ColorPicker
-        colors={colors}
-        setSelectedColor={setSelectedColor}
-        selectedColor={selectedColor}
-      />
-
       {view == Views.Create ? (
         <CreateFile size={size} setSize={setSize} onButtonClick={create} />
       ) : null}
       {view == Views.Draw ? (
-        <Draw size={size} selectedColor={selectedColor} />
+        <>
+          <ColorPicker
+            colors={colors}
+            setSelectedColor={setSelectedColor}
+            selectedColor={selectedColor}
+          />
+          <Draw size={size} selectedColor={selectedColor} />
+        </>
       ) : null}
     </div>
   );

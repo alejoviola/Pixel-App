@@ -11,8 +11,8 @@ const Pixel = ({
   selectedColor: string;
   style?: React.CSSProperties;
 }): JSX.Element => {
-  const [color, setColor] = useState<`#${string}`>("#FFFFFF");
-  const [oldColor, setOldColor] = useState<`#${string}`>("#FFFFFF");
+  const [color, setColor] = useState<string>("#FFFFFF");
+  const [oldColor, setOldColor] = useState<string>("#FFFFFF");
   const [canChange, setCanChange] = useState<boolean>(true);
 
   const applyColor = () => {
