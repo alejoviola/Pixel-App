@@ -14,6 +14,10 @@ const TestCanvas = ({
 }): JSX.Element => {
   ///////////////////
 
+  // TODO:
+  // Make cursor helper.
+  // Fix Stroke problem.
+
   const [hold, setHold] = useState<boolean>(false);
 
   useEffect(() => {
@@ -24,15 +28,13 @@ const TestCanvas = ({
     ctx.imageSmoothingEnabled = false;
 
     const CELL_SIDE_COUNT = 32;
-    const cellPixelLength = canvas.width / CELL_SIDE_COUNT;
+    const cellPixelLength = canvas.clientWidth / CELL_SIDE_COUNT;
 
     function fillCell(cellX: number, cellY: number, color: string) {
       const startX = cellX * cellPixelLength;
       const startY = cellY * cellPixelLength;
 
-      ctx.fillStyle = color;
       ctx.fillRect(startX, startY, cellPixelLength * 2, cellPixelLength * 2);
-      ctx.strokeRect(startX, startY, cellPixelLength * 2, cellPixelLength * 2);
     }
 
     function deleteCell(cellX: number, cellY: number) {
@@ -86,11 +88,11 @@ const TestCanvas = ({
         console.log("Delete");
       }
     });
-    // canvas.addEventListener("mousemove", (e: MouseEvent) => {
-    //   if (mouseHold == true) {
-    //     handleCanvasMousedown(e, "#000000");
-    //   }
-    // });
+    canvas.addEventListener("mousemove", (e: MouseEvent) => {
+      if (mouseHold == true) {
+        handleCanvasMousedown(e, "#000000");
+      }
+    });
     canvas.addEventListener("mouseup", () => {
       mouseHold = false;
       console.log("Mouse Up");
