@@ -1,10 +1,8 @@
 // REACT
 import React, { useState } from "react";
 
-// STYLES
-import styles from "./App.module.sass";
-
 // Components
+import TestCanvas from "./components/TestCanvas/TestCanvas";
 import CreateFile from "./components/CreateFile/CreateFile";
 import Draw from "./components/Draw/Draw";
 
@@ -43,8 +41,8 @@ const App: React.FC = () => {
   // RENDER //
   ////////////
   return (
-    <div className="App">
-      {view == Views.Create ? (
+    <>
+      {/* {view == Views.Create ? (
         <CreateFile size={size} setSize={setSize} onButtonClick={create} />
       ) : null}
       {view == Views.Draw ? (
@@ -56,8 +54,9 @@ const App: React.FC = () => {
           />
           <Draw size={size} selectedColor={selectedColor} />
         </>
-      ) : null}
-    </div>
+      ) : null} */}
+      <TestCanvas />
+    </>
   );
 };
 
