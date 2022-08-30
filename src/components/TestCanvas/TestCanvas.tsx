@@ -21,107 +21,125 @@ const TestCanvas = ({
   const [hold, setHold] = useState<boolean>(false);
 
   useEffect(() => {
-    const canvas = document.getElementById("Canvas") as HTMLCanvasElement;
-    canvas.width = 400;
-    canvas.height = 400;
-    const ctx = canvas.getContext("2d") as CanvasRenderingContext2D;
-    ctx.imageSmoothingEnabled = false;
-
     const CELL_SIDE_COUNT = 32;
+
+    const canvas = document.getElementById("Canvas") as HTMLCanvasElement;
+    canvas.width = CELL_SIDE_COUNT * 20;
+    canvas.height = CELL_SIDE_COUNT * 20;
+    const ctx = canvas.getContext("2d") as CanvasRenderingContext2D;
+
     const cellPixelLength = canvas.clientWidth / CELL_SIDE_COUNT;
 
-    function fillCell(cellX: number, cellY: number, color: string) {
-      const startX = cellX * cellPixelLength;
-      const startY = cellY * cellPixelLength;
+    //////////////////////////////////
 
-      ctx.fillRect(startX, startY, cellPixelLength * 2, cellPixelLength * 2);
+    // MOUSE FUNCTIONS
+
+    let lastMousePosition = { x: 0, y: 0 };
+
+    //////////////////////////////////
+    // PIXELS
+    class Pixel {
+      x: number;
+      y: number;
+      color: string;
+      ctx: CanvasRenderingContext2D;
+      cellPixelLength: number;
+
+      constructor(
+        x: number,
+        y: number,
+        ctx: CanvasRenderingContext2D,
+        color: string,
+        cellPixelLength: number
+      ) {
+        this.x = x;
+        this.y = y;
+        this.ctx = ctx;
+        this.color = color;
+        this.cellPixelLength = cellPixelLength;
+      }
+
+      fillCell() {
+        ctx.fillStyle = this.color;
+        ctx.fillRect(this.x, this.y, cellPixelLength, cellPixelLength);
+      }
     }
 
-    function deleteCell(cellX: number, cellY: number) {
-      const startX = cellX * cellPixelLength;
-      const startY = cellY * cellPixelLength;
+    const pixels: Array<Pixel> = [];
 
-      ctx.strokeStyle = "none";
-      ctx.clearRect(startX, startY, cellPixelLength, cellPixelLength);
-    }
-
-    function handleCanvasMousedown(e: MouseEvent, color: string) {
-      // Ensure user is using their primary mouse button
-      // if (e.button !== 0) {
-      //   return;
-      // }
-
+    function handleCanvasMousedown(e: MouseEvent) {
       const canvasBoundingRect = canvas.getBoundingClientRect();
       const x = e.clientX - canvasBoundingRect.left;
       const y = e.clientY - canvasBoundingRect.top;
       const cellX = Math.floor(x / cellPixelLength);
       const cellY = Math.floor(y / cellPixelLength);
-      fillCell(cellX, cellY, color);
+      const startX = cellX * cellPixelLength;
+      const startY = cellY * cellPixelLength;
+
+      pixels.unshift(
+        new Pixel(startX, startY, ctx, "#000000", cellPixelLength)
+      );
     }
 
     function deleteTool(e: MouseEvent) {
-      // Ensure user is using their primary mouse button
-      if (e.button !== 0) {
-        return;
-      }
-
       const canvasBoundingRect = canvas.getBoundingClientRect();
       const x = e.clientX - canvasBoundingRect.left;
       const y = e.clientY - canvasBoundingRect.top;
       const cellX = Math.floor(x / cellPixelLength);
       const cellY = Math.floor(y / cellPixelLength);
-      deleteCell(cellX, cellY);
+      const startX = cellX * cellPixelLength;
+      const startY = cellY * cellPixelLength;
+
+      pixels.map((value, i) => {
+        if (value.x == startX && value.y == startY) {
+          console.log("Deleted " + i);
+          pixels.splice(i, i + 1);
+        }
+      });
     }
 
+    // EVENTS
     let mouseHold = false;
-    let mouseButton = false;
 
     window.addEventListener("contextmenu", (e) => e.preventDefault());
 
     canvas.addEventListener("mousedown", (e: MouseEvent) => {
-      mouseHold = true;
       if (e.button == 0) {
-        handleCanvasMousedown(e, "#000000");
-        console.log("Draw");
-      } else {
-        handleCanvasMousedown(e, "white");
-        console.log("Delete");
+        mouseHold = true;
+        handleCanvasMousedown(e);
+      } else if (e.button == 2) {
+        deleteTool(e);
       }
-    });
-    canvas.addEventListener("mousemove", (e: MouseEvent) => {
-      if (mouseHold == true) {
-        handleCanvasMousedown(e, "#000000");
-      }
-    });
-    canvas.addEventListener("mouseup", () => {
-      mouseHold = false;
-      console.log("Mouse Up");
     });
 
-    // if (e.button == 0) {
-    //   handleCanvasMousedown(e, "#000000");
-    //   canvas.addEventListener("mousemove", (e: MouseEvent) => {
-    //     console.log(e.button);
-    //     if (mouseHold) {
-    //       handleCanvasMousedown(e, "#000000");
-    //       console.log("Mouse Down");
-    //     }
-    //   });
-    // } else if (e.button == 2) {
-    //   deleteTool(e);
-    //   canvas.addEventListener("mousemove", (e: MouseEvent) => {
-    //     if (mouseHold) {
-    //       handleCanvasMousedown(e, "#ffffff");
-    //       console.log("Mouse Down");
-    //     }
-    //   });
-    // }
+    canvas.addEventListener("mousemove", (e: MouseEvent) => {
+      if (mouseHold) {
+        handleCanvasMousedown(e);
+      }
+    });
+
+    const animate = () => {
+      ctx.clearRect(0, 0, canvas.width, canvas.height);
+      for (let i = 0; i < pixels.length; i++) {
+        pixels[i].fillCell();
+      }
+      requestAnimationFrame(animate);
+    };
+    animate();
+
+    canvas.addEventListener("mouseup", () => {
+      mouseHold = false;
+    });
   }, []);
 
   //////////
   //RENDER//
   //////////
-  return <canvas id="Canvas" className={styles.Canvas}></canvas>;
+  return (
+    <>
+      <canvas id="Canvas" className={styles.Canvas}></canvas>
+    </>
+  );
 };
 
 export default TestCanvas;
