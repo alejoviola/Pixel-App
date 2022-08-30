@@ -75,10 +75,23 @@ const TestCanvas = ({
       const cellY = Math.floor(y / cellPixelLength);
       const startX = cellX * cellPixelLength;
       const startY = cellY * cellPixelLength;
+      let overlapping = false;
 
-      pixels.unshift(
-        new Pixel(startX, startY, ctx, "#000000", cellPixelLength)
-      );
+      for (let i = 0; i < pixels.length; i++) {
+        if (pixels[i].y == startY && pixels[i].x == startX) {
+          overlapping = true;
+          break;
+        }
+      }
+      if (pixels.length == 0) {
+        pixels.unshift(
+          new Pixel(startX, startY, ctx, "#000000", cellPixelLength)
+        );
+      } else if (!overlapping) {
+        pixels.unshift(
+          new Pixel(startX, startY, ctx, "#000000", cellPixelLength)
+        );
+      }
     }
 
     function deleteTool(e: MouseEvent) {
@@ -90,12 +103,12 @@ const TestCanvas = ({
       const startX = cellX * cellPixelLength;
       const startY = cellY * cellPixelLength;
 
-      pixels.map((value, i) => {
-        if (value.x == startX && value.y == startY) {
-          console.log("Deleted " + i);
+      for (let i = 0; i < pixels.length; i++) {
+        if (pixels[i].y == startY && pixels[i].x == startX) {
           pixels.splice(i, i + 1);
+          break;
         }
-      });
+      }
     }
 
     // EVENTS
