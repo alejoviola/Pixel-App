@@ -113,21 +113,26 @@ const TestCanvas = ({
 
     // EVENTS
     let mouseHold = false;
+    let mouseType = 0;
 
     window.addEventListener("contextmenu", (e) => e.preventDefault());
 
     canvas.addEventListener("mousedown", (e: MouseEvent) => {
+      mouseHold = true;
       if (e.button == 0) {
-        mouseHold = true;
+        mouseType = 1;
         handleCanvasMousedown(e);
       } else if (e.button == 2) {
         deleteTool(e);
+        mouseType = 2;
       }
     });
 
     canvas.addEventListener("mousemove", (e: MouseEvent) => {
-      if (mouseHold) {
+      if (mouseType == 1) {
         handleCanvasMousedown(e);
+      } else if (mouseType == 2) {
+        deleteTool(e);
       }
     });
 
@@ -142,6 +147,7 @@ const TestCanvas = ({
 
     canvas.addEventListener("mouseup", () => {
       mouseHold = false;
+      mouseType = 0;
     });
   }, []);
 
