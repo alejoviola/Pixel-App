@@ -105,7 +105,7 @@ const TestCanvas = ({
 
       for (let i = 0; i < pixels.length; i++) {
         if (pixels[i].y == startY && pixels[i].x == startX) {
-          pixels.splice(i, i + 1);
+          pixels.splice(i, 1);
           break;
         }
       }
