@@ -1,5 +1,5 @@
 //React
-import React, { useState, useEffect } from "react";
+import React, { useState, useEffect, useRef } from "react";
 
 //Styles
 import styles from "./TestCanvas.module.sass";
@@ -12,13 +12,19 @@ const TestCanvas = ({
 }: {
   style?: React.CSSProperties;
 }): JSX.Element => {
-  ///////////////////
-
   // TODO:
-  // Make cursor helper.
-  // Fix Stroke problem.
+  // - Remove all functions inside useEffect
+  // - Restructure
 
-  const [hold, setHold] = useState<boolean>(false);
+  // Color Picker
+  const [colorSelected, setColor] = useState("#872C2C");
+
+  const handleChange = (e: React.ChangeEvent<HTMLInputElement>) => {
+    const { value } = e.target;
+    setColor(value);
+  };
+
+  ///////////////////
 
   useEffect(() => {
     const CELL_SIDE_COUNT = 32;
@@ -85,11 +91,11 @@ const TestCanvas = ({
       }
       if (pixels.length == 0) {
         pixels.unshift(
-          new Pixel(startX, startY, ctx, "#000000", cellPixelLength)
+          new Pixel(startX, startY, ctx, colorSelected, cellPixelLength)
         );
       } else if (!overlapping) {
         pixels.unshift(
-          new Pixel(startX, startY, ctx, "#000000", cellPixelLength)
+          new Pixel(startX, startY, ctx, colorSelected, cellPixelLength)
         );
       }
     }
@@ -157,6 +163,10 @@ const TestCanvas = ({
   return (
     <>
       <canvas id="Canvas" className={styles.Canvas}></canvas>
+
+      <div className={styles.ColorPicker}>
+        <input type="color" value={colorSelected} onChange={handleChange} />
+      </div>
     </>
   );
 };
